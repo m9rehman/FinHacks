@@ -47,7 +47,15 @@ uniqueLocs = fInfo["Location"].unique()
 
 fInfoAgg = DataFrame(columns=['Location'], data = uniqueLocs)
 fInfoAgg["Totalcost"] = fInfoAgg["Location"].apply(sumLocation)
-print(fInfoAgg)
+# print(pd.value_counts(fInfo["Location"]))
+
+fInfoAgg.to_csv('AggregateReport')
+fInfo.to_csv('FinalRawReport.csv')
+pd.value_counts(fInfo["Location"]).to_csv('FrequencyReport.csv')
+
+# print(fInfoAgg)
+
+
 timeList = fInfo["Timestamp"].tolist()
 balanceList = fInfo["AmountRemaining"].tolist()
 
@@ -55,5 +63,5 @@ balanceList = fInfo["AmountRemaining"].tolist()
 # plt.plot(timeList,balanceList)
 # plt.show()
 
-# fInfo.to_csv('FinalReport3.csv')
+
 
