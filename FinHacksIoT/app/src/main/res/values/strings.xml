@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">FinHacksIoT</string>
+    <string name="app_name">E-Advisor</string>
+    <string name="welcome">Welcome to E-Advisor</string>
 </resources>
