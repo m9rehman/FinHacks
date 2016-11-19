@@ -10,7 +10,6 @@ var users = require('./routes/users');
 
 var app = express();
 
-ngrok.connect(function(err,url){});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
