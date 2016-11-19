@@ -19,6 +19,6 @@ public class MainActivity extends AppCompatActivity {
         mLocationBtn = (Button) findViewById(R.id.locationBtn);
         mAnalysisBtn = (Button) findViewById(R.id.analysisBtn);
 
-        
+
     }
 }
