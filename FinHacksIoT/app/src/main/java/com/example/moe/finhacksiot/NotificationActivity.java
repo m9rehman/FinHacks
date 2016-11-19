@@ -1,5 +1,6 @@
 package com.example.moe.finhacksiot;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,11 @@ import android.widget.EditText;
 import com.getpebble.android.kit.PebbleKit;
 import com.getpebble.android.kit.util.PebbleDictionary;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class NotificationActivity extends AppCompatActivity {
@@ -45,9 +51,34 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Send the dictionary
-                PebbleKit.sendDataToPebble(getApplicationContext(), appUuid, dict);
+//                PebbleKit.sendDataToPebble(getApplicationContext(), appUuid, dict);
+                String message = mMessageView.getText().toString();
+                SendMessage("E-Advisor says:",message);
+                mMessageView.setText("");
             }
         });
 
+    }
+
+    public void SendMessage(String title, String body)
+    {
+        // Is the watch connected?
+        boolean isConnected = PebbleKit.isWatchConnected(this);
+
+        if(isConnected) {
+            // Push a notification
+            final Intent i = new Intent("com.getpebble.action.SEND_NOTIFICATION");
+
+            final Map data = new HashMap();
+            data.put("title", title);
+            data.put("body", body);
+            final JSONObject jsonData = new JSONObject(data);
+            final String notificationData = new JSONArray().put(jsonData).toString();
+
+            i.putExtra("messageType", "PEBBLE_ALERT");
+            i.putExtra("sender", "PebbleKit Android");
+            i.putExtra("notificationData", notificationData);
+            sendBroadcast(i);
+        }
     }
 }
