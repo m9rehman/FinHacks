@@ -11,6 +11,13 @@
     android:orientation="vertical"
     android:gravity="center"
     tools:context="com.example.moe.finhacksiot.PayActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Balance"
+        android:textSize="20dp"
+        android:layout_gravity="start"
+        android:id="@+id/BalanceTxt"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -22,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Item"
-        android:textSize="30dp"
+        android:textSize="20dp"
         android:id="@+id/ItemTxt"/>
 
     <TextView
@@ -31,6 +38,13 @@
         android:hint="Price"
         android:textSize="20dp"
         android:id="@+id/PriceTxt"/>
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Quantity"
+        android:id="@+id/quantityTxt"/>
 
     <Button
         android:layout_width="wrap_content"

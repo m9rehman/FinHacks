@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 public class PayActivity extends AppCompatActivity {
@@ -39,6 +41,8 @@ public class PayActivity extends AppCompatActivity {
     private TextView mPriceTxt;
     private ImageView mImageView;
     private Button mNFCPayBtn;
+    private TextView mBalanceTxt;
+    private EditText mQuantity;
 
     public static final String MIME_TEXT_PLAIN = "text/plain";
     private NfcAdapter mNfcAdapter;
@@ -63,6 +67,8 @@ public class PayActivity extends AppCompatActivity {
         mImageView = (ImageView) findViewById(R.id.itemImg);
         mNFCPayBtn = (Button) findViewById(R.id.NFCPayBtn);
         mPriceTxt = (TextView) findViewById(R.id.PriceTxt);
+        mQuantity = (EditText) findViewById(R.id.quantityTxt);
+        mBalanceTxt = (TextView) findViewById(R.id.BalanceTxt);
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -110,8 +116,9 @@ public class PayActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Send the dictionary
 //                PebbleKit.sendDataToPebble(getApplicationContext(), appUuid, dict);
-               mbalance -= mprice;
-                SendMessage("E-Advisor says:","$"+String.valueOf(mprice) +
+               int quantity = Integer.parseInt(mQuantity.getText().toString());
+               mbalance -= (mprice * quantity) ;
+                SendMessage("E-Advisor says:","$"+String.valueOf(mprice * quantity) +
                         " spent." + "Balance: " + "$"+String.valueOf(mbalance)  );
                 mprice = 0;
                 itemID = 0;
@@ -122,24 +129,61 @@ public class PayActivity extends AppCompatActivity {
 
     }
 
+    public static int randInt() {
+
+        Random generator = new Random();
+        int i = generator.nextInt(3);
+        return i;
+    }
+
     private void setProductConfig(int price){
         if(price == 1000){
             itemID = 1;
             mImageView.setImageResource(R.drawable.yeezy);
             mItemTxt.setText(R.string.yeezy);
+
+            if (mbalance <= 2400){
+                int i = randInt();
+                String message = negativeStatements[i];
+                SendMessage("E-Advisor Says:\n","Kanye would appreciate this, " + message
+                        + "\n" + "Balance: "+ String.valueOf(mbalance));
+            }
         } else if(price == 400){
             itemID = 2;
             mImageView.setImageResource(R.drawable.steam);
             mItemTxt.setText(R.string.steam);
+
+            if (mbalance <=1800){
+                int i = randInt();
+                String message = negativeStatements[i];
+                SendMessage("E-Advisor Says:\n","PC Master Race?, " + message
+                        + "\n" + "Balance: "+ String.valueOf(mbalance));
+            }
         } else if(price == 200){
             itemID = 3;
             mImageView.setImageResource(R.drawable.vodka);
             mItemTxt.setText(R.string.vodka);
+
+            if (mbalance <= 1500){
+                int i = randInt();
+                String message = negativeStatements[i];
+                SendMessage("E-Advisor Says:\n","Partying is fun, " + message
+                        + "\n" + "Balance: "+ String.valueOf(mbalance));
+            }
         } else {
             itemID = 4;
             mImageView.setImageResource(R.drawable.chipotle);
             mItemTxt.setText(R.string.chipotle);
+
+            if (mbalance <= 1500){
+                int i = randInt();
+                String message = negativeStatements[i];
+                SendMessage("E-Advisor Says:\n","Guac is extra, " + message
+                        + "\n" + "Balance: "+ String.valueOf(mbalance));
+            }
         }
+
+        mBalanceTxt.setText("Balance: "+String.valueOf(mbalance));
 
     }
 
@@ -267,12 +311,8 @@ public class PayActivity extends AppCompatActivity {
             if (result != null) {
                 mprice = Integer.parseInt(result);
                 setProductConfig(mprice);
-
-
-
-                //TODO: Fucntion for Item name
-                
                 mPriceTxt.setText("$ "+String.valueOf(mprice));
+
 
             }
         }
