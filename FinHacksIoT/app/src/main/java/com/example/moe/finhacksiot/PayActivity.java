@@ -48,6 +48,11 @@ public class PayActivity extends AppCompatActivity {
     //TODO: Save the instance state
     private int mbalance=5000;
     private int mprice;
+    // 1 : Yeezy, 2: Steam, 3: Vodka, 4: Chipotle
+    private int itemID;
+
+    private String[] negativeStatements = new String[3 ];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,11 @@ public class PayActivity extends AppCompatActivity {
         mPriceTxt = (TextView) findViewById(R.id.PriceTxt);
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        negativeStatements[0] = "but remember, rent is a thing.";
+        negativeStatements[1] = "but getting evicted sucks";
+        negativeStatements[2] = "but you have to eat too";
+
 
         if (mNfcAdapter == null) {
             // Stop here, we definitely need NFC
@@ -104,10 +114,37 @@ public class PayActivity extends AppCompatActivity {
                 SendMessage("E-Advisor says:","$"+String.valueOf(mprice) +
                         " spent." + "Balance: " + "$"+String.valueOf(mbalance)  );
                 mprice = 0;
+                itemID = 0;
 
             }
         });
 
+
+    }
+
+    private void setProductID(int price){
+        if(price == 1000){
+            itemID = 1;
+        } else if(price == 400){
+            itemID = 2;
+        } else if(price == 200){
+            itemID = 3;
+        } else {
+            itemID = 4;
+        }
+
+    }
+
+    private void setProductImage(){
+        if (itemID == 1){
+            mImageView.setImageResource(R.drawable.yeezy);
+        } else if (itemID == 2){
+            mImageView.setImageResource(R.drawable.steam);
+        } else if (itemID == 3){
+            mImageView.setImageResource(R.drawable.vodka);
+        } else {
+            mImageView.setImageResource(R.drawable.chipotle);
+        }
 
     }
 
@@ -232,12 +269,18 @@ public class PayActivity extends AppCompatActivity {
             super.onPostExecute(result);
             if (result != null) {
                 mprice = Integer.parseInt(result);
+                setProductID(mprice);
+                setProductImage();
+
+
                 //TODO: Fucntion for Item name
                 mItemTxt.setText("Item");
                 mPriceTxt.setText("$ "+String.valueOf(mprice));
             }
         }
     }
+
+
 
     /**
      * @param activity The corresponding {@link Activity} requesting the foreground dispatch.
