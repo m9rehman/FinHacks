@@ -14,15 +14,24 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getpebble.android.kit.PebbleKit;
+import com.getpebble.android.kit.util.PebbleDictionary;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class PayActivity extends AppCompatActivity {
 
@@ -37,7 +46,8 @@ public class PayActivity extends AppCompatActivity {
     private static final String TAG = PayActivity.class.getSimpleName();
 
     //TODO: Save the instance state
-    private int balance;
+    private int mbalance=5000;
+    private int mprice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +76,37 @@ public class PayActivity extends AppCompatActivity {
         }
 
         handleIntent(getIntent());
+
+        //---------Pebble---------
+        // Create a new dictionary
+        final PebbleDictionary dict = new PebbleDictionary();
+
+        // The key representing a contact name is being transmitted
+        final int AppKeyContactName = 0;
+        final int AppKeyAge = 1;
+
+        // Get data from the app
+        final String contactName = "Moe";
+        final int age = 19;
+
+        // Add data to the dictionary
+        dict.addString(AppKeyContactName, contactName);
+        dict.addInt32(AppKeyAge, age);
+
+        final UUID appUuid = UUID.fromString("EC7EE5C6-8DDF-4089-AA84-C3396A11CC95");
+
+        mNFCPayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Send the dictionary
+//                PebbleKit.sendDataToPebble(getApplicationContext(), appUuid, dict);
+               mbalance -= mprice;
+                SendMessage("E-Advisor says:","$"+String.valueOf(mprice) +
+                        " spent." + "Balance: " + "$"+String.valueOf(mbalance)  );
+                mprice = 0;
+
+            }
+        });
 
 
     }
@@ -190,7 +231,10 @@ public class PayActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             if (result != null) {
-                mPriceTxt.setText("Read content: " + result);
+                mprice = Integer.parseInt(result);
+                //TODO: Fucntion for Item name
+                mItemTxt.setText("Item");
+                mPriceTxt.setText("$ "+String.valueOf(mprice));
             }
         }
     }
@@ -224,6 +268,30 @@ public class PayActivity extends AppCompatActivity {
 
     public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
         adapter.disableForegroundDispatch(activity);
+    }
+
+    //---------------PEBBLE------------------------------------
+
+    public void SendMessage(String title, String body)
+    {
+        // Is the watch connected?
+        boolean isConnected = PebbleKit.isWatchConnected(this);
+
+        if(isConnected) {
+            // Push a notification
+            final Intent i = new Intent("com.getpebble.action.SEND_NOTIFICATION");
+
+            final Map data = new HashMap();
+            data.put("title", title);
+            data.put("body", body);
+            final JSONObject jsonData = new JSONObject(data);
+            final String notificationData = new JSONArray().put(jsonData).toString();
+
+            i.putExtra("messageType", "PEBBLE_ALERT");
+            i.putExtra("sender", "PebbleKit Android");
+            i.putExtra("notificationData", notificationData);
+            sendBroadcast(i);
+        }
     }
 
 
