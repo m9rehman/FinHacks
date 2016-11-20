@@ -118,7 +118,8 @@ public class PayActivity extends AppCompatActivity {
 //                PebbleKit.sendDataToPebble(getApplicationContext(), appUuid, dict);
                int quantity = Integer.parseInt(mQuantity.getText().toString());
                mbalance -= (mprice * quantity) ;
-                SendMessage("E-Advisor says:","$"+String.valueOf(mprice * quantity) +
+                int totalspent = mprice * quantity;
+                SendMessage("E-Advisor says:","$"+String.valueOf(totalspent) +
                         " spent." + "Balance: " + "$"+String.valueOf(mbalance)  );
                 mprice = 0;
                 itemID = 0;
@@ -156,7 +157,7 @@ public class PayActivity extends AppCompatActivity {
             if (mbalance <=1800){
                 int i = randInt();
                 String message = negativeStatements[i];
-                SendMessage("E-Advisor Says:\n","PC Master Race?, " + message
+                SendMessage("E-Advisor Says:\n","PC Master Race, " + message
                         + "\n" + "Balance: "+ String.valueOf(mbalance));
             }
         } else if(price == 200){
