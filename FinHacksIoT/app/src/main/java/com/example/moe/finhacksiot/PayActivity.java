@@ -122,31 +122,28 @@ public class PayActivity extends AppCompatActivity {
 
     }
 
-    private void setProductID(int price){
+    private void setProductConfig(int price){
         if(price == 1000){
             itemID = 1;
+            mImageView.setImageResource(R.drawable.yeezy);
+            mItemTxt.setText(R.string.yeezy);
         } else if(price == 400){
             itemID = 2;
+            mImageView.setImageResource(R.drawable.steam);
+            mItemTxt.setText(R.string.steam);
         } else if(price == 200){
             itemID = 3;
+            mImageView.setImageResource(R.drawable.vodka);
+            mItemTxt.setText(R.string.vodka);
         } else {
             itemID = 4;
-        }
-
-    }
-
-    private void setProductImage(){
-        if (itemID == 1){
-            mImageView.setImageResource(R.drawable.yeezy);
-        } else if (itemID == 2){
-            mImageView.setImageResource(R.drawable.steam);
-        } else if (itemID == 3){
-            mImageView.setImageResource(R.drawable.vodka);
-        } else {
             mImageView.setImageResource(R.drawable.chipotle);
+            mItemTxt.setText(R.string.chipotle);
         }
 
     }
+
+
 
     @Override
     protected void onResume() {
@@ -269,13 +266,14 @@ public class PayActivity extends AppCompatActivity {
             super.onPostExecute(result);
             if (result != null) {
                 mprice = Integer.parseInt(result);
-                setProductID(mprice);
-                setProductImage();
+                setProductConfig(mprice);
+
 
 
                 //TODO: Fucntion for Item name
-                mItemTxt.setText("Item");
+                
                 mPriceTxt.setText("$ "+String.valueOf(mprice));
+
             }
         }
     }

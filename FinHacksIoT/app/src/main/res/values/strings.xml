@@ -2,4 +2,9 @@
     <string name="app_name">E-Advisor</string>
     <string name="welcome">Welcome to E-Advisor</string>
     <string name="send_message">Send a message to Pebble</string>
+
+    <string name="yeezy">Yeezy Boost</string>
+    <string name="steam">SteamBox</string>
+    <string name="vodka">GreyGoose Vodka</string>
+    <string name="chipotle">Chipotle Burrito</string>
 </resources>
