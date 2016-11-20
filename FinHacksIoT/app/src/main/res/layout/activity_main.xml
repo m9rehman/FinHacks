@@ -37,34 +37,45 @@
             android:textSize="20dp"/>
 
 
-        <Button android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:text="View Finances"
-                android:id="@+id/graphBtn"
+
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+android:layout_marginTop="80dp"
+>
+
+    <Button android:layout_width="110dp"
+                 android:layout_height="110dp"
+                 android:text="Android Pay"
+                 android:id="@+id/payBtn"
+                 android:layout_marginRight="20dp"
+
+        android:layout_gravity="center"/>
+
+    <Button
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:text="Financial Report"
+            android:id="@+id/analysisBtn"
+            android:layout_marginRight="20dp"
             />
 
-
-        <Button android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Location Spoof"
-                android:id="@+id/locationBtn"
-        />
-
-        <Button android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Android Pay"
-                android:id="@+id/payBtn" />
-
-        <Button android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Analysis"
-                android:id="@+id/analysisBtn" />
+    <Button
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:text="Bank Account"
+        android:id="@+id/bankBtn"
+         />
 
 
 
+
+
+</LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
