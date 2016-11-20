@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mFinanceBtn;
     private Button mLocationBtn;
     private Button mAnalysisBtn;
+    private Button mPayBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,11 +21,20 @@ public class MainActivity extends AppCompatActivity {
         mFinanceBtn = (Button) findViewById(R.id.graphBtn);
         mLocationBtn = (Button) findViewById(R.id.locationBtn);
         mAnalysisBtn = (Button) findViewById(R.id.analysisBtn);
+        mPayBtn = (Button) findViewById(R.id.payBtn);
 
         mLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this, NotificationActivity.class);
+                startActivity(i);
+            }
+        });
+
+        mPayBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, PayActivity.class);
                 startActivity(i);
             }
         });

@@ -49,7 +49,7 @@ fInfoAgg = DataFrame(columns=['Location'], data = uniqueLocs)
 fInfoAgg["Totalcost"] = fInfoAgg["Location"].apply(sumLocation)
 # print(pd.value_counts(fInfo["Location"]))
 
-fInfoAgg.to_csv('AggregateReport')
+fInfoAgg.to_csv('AggregateReport.csv')
 fInfo.to_csv('FinalRawReport.csv')
 pd.value_counts(fInfo["Location"]).to_csv('FrequencyReport.csv')
 

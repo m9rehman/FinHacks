@@ -30,12 +30,6 @@
                 android:id="@+id/graphBtn"
             />
 
-        <Button android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Analysis"
-                android:id="@+id/analysisBtn"
-        />
 
         <Button android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,6 +37,17 @@
                 android:text="Location Spoof"
                 android:id="@+id/locationBtn"
         />
+
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Android Pay"
+                android:id="@+id/payBtn" />
+
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Analysis"
+                android:id="@+id/analysisBtn" />
 
 
 

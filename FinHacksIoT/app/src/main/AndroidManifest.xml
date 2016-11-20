@@ -17,6 +17,8 @@
         </activity>
         <activity android:name=".NotificationActivity">
         </activity>
+        <activity android:name=".PayActivity">
+        </activity>
     </application>
 
 </manifest>
