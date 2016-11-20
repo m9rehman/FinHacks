@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mLocationBtn;
     private Button mAnalysisBtn;
     private Button mPayBtn;
+    private ImageView mStarterImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
         mLocationBtn = (Button) findViewById(R.id.locationBtn);
         mAnalysisBtn = (Button) findViewById(R.id.analysisBtn);
         mPayBtn = (Button) findViewById(R.id.payBtn);
+        mStarterImg = (ImageView) findViewById(R.id.owlimageview);
+
+        mStarterImg.setImageResource(R.drawable.advisor);
 
         mLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
 
         mPayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
