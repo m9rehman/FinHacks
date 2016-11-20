@@ -48,6 +48,7 @@ public class PayActivity extends AppCompatActivity {
     private NfcAdapter mNfcAdapter;
 
     private static final String TAG = PayActivity.class.getSimpleName();
+    private static final String KEY_BALANCE = "balance";
 
     //TODO: Save the instance state
     private int mbalance=5000;
@@ -58,10 +59,16 @@ public class PayActivity extends AppCompatActivity {
     private String[] negativeStatements = new String[3 ];
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
+
+        if (savedInstanceState != null) {
+            mbalance = savedInstanceState.getInt(KEY_BALANCE, 5000);
+        }
 
         mItemTxt = (TextView) findViewById(R.id.ItemTxt);
         mImageView = (ImageView) findViewById(R.id.itemImg);
@@ -120,14 +127,22 @@ public class PayActivity extends AppCompatActivity {
                mbalance -= (mprice * quantity) ;
                 int totalspent = mprice * quantity;
                 SendMessage("E-Advisor says:","$"+String.valueOf(totalspent) +
-                        " spent." + "Balance: " + "$"+String.valueOf(mbalance)  );
+                        " spent." +"\n"+ "Balance: " + "$"+String.valueOf(mbalance)  );
                 mprice = 0;
                 itemID = 0;
 
+                mBalanceTxt.setText("Balance: "+String.valueOf(mbalance));
             }
         });
 
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putInt(KEY_BALANCE, mbalance);
     }
 
     public static int randInt() {
